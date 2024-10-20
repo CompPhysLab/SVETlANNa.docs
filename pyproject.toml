@@ -1,0 +1,22 @@
+[tool.poetry]
+package-mode = false
+
+
+[tool.poetry.dependencies]
+python = "^3.11,<3.12"
+numpy = "<2.0"
+torch = "^2.4.0"
+matplotlib = "^3.9.2"
+torchvision = "^0.19.1"
+# our package
+svetlanna = { path = "../SVETlANNa/", develop = true }
+
+pytest = "^8.3.2"
+jupyter = "^1.1.1"
+tqdm = "^4.66.5"
+scipy = "^1.14.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
