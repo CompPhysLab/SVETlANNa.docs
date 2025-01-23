@@ -608,6 +608,21 @@ files = [
 ]
 
 [[package]]
+name = "dill"
+version = "0.3.9"
+description = "serialize all of Python"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "dill-0.3.9-py3-none-any.whl", hash = "sha256:468dff3b89520b474c0397703366b7b95eebe6303f108adf9b19da1f702be87a"},
+    {file = "dill-0.3.9.tar.gz", hash = "sha256:81aa267dddf68cbfe8029c42ca9ec6a4ab3b22371d1c450abc54422577b4512c"},
+]
+
+[package.extras]
+graph = ["objgraph (>=1.7.2)"]
+profile = ["gprof2dot (>=2022.7.29)"]
+
+[[package]]
 name = "executing"
 version = "2.1.0"
 description = "Get the currently executing AST node of a frame, and other information"
@@ -1061,6 +1076,17 @@ MarkupSafe = ">=2.0"
 
 [package.extras]
 i18n = ["Babel (>=2.7)"]
+
+[[package]]
+name = "joblib"
+version = "1.4.2"
+description = "Lightweight pipelining with Python functions"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "joblib-1.4.2-py3-none-any.whl", hash = "sha256:06d478d5674cbc267e7496a410ee875abd68e4340feff4490bcb7afb88060ae6"},
+    {file = "joblib-1.4.2.tar.gz", hash = "sha256:2382c5816b2636fbd20a09e0f4e9dad4736765fdfb7dca582943b9c1366b3f0e"},
+]
 
 [[package]]
 name = "json5"
@@ -2672,6 +2698,28 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
+name = "reservoirpy"
+version = "0.3.12"
+description = "A simple and flexible code for Reservoir Computing architectures like Echo State Networks."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "reservoirpy-0.3.12-py3-none-any.whl", hash = "sha256:7f869c59fb76bc1fbef379348e509c3d623929a1a08dc96b6f94f1afbbbfc601"},
+    {file = "reservoirpy-0.3.12.tar.gz", hash = "sha256:863af1505010806b27cee6aab172720a24ec9b2f43d6febd00b8c15bc698d9a5"},
+]
+
+[package.dependencies]
+dill = ">=0.3.1.1"
+joblib = ">=0.14.1"
+numpy = ">=1.21.1"
+scipy = ">=1.4.1"
+tqdm = ">=4.43.0"
+
+[package.extras]
+hyper = ["hyperopt", "matplotlib (>=2.2.0)", "seaborn"]
+sklearn = ["scikit-learn (>=0.24.2)"]
+
+[[package]]
 name = "rfc3339-validator"
 version = "0.1.4"
 description = "A pure python RFC3339 validator"
@@ -3361,4 +3409,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11,<3.12"
-content-hash = "e307459f4acdec0dcad8aff30e4f8e9ede23e90206628b1e444eb73e98af2476"
+content-hash = "1506f2cc0cc85db3a06c3e2ec4aa60f52a56c9fc553c7f9266e6cfad9c54bd11"
