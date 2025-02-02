@@ -115,6 +115,8 @@ class DatasetOfWavefronts(Dataset):
         init_ds: Dataset,
         transformations: transforms.Compose,
         sim_params: SimulationParameters,
+        target: str = 'label',
+        detector_mask: torch.Tensor | None = None
     ):
         """
         Parameters
@@ -125,12 +127,21 @@ class DatasetOfWavefronts(Dataset):
             A sequence of transforms that will be applied to dataset elements (images).
         sim_params : SimulationParameters
             Simulation parameters for a further optical network.
+        terget : str
+            A type of target
+                (1) 'label' - returns just a number of class
+                (2) 'detector' - returns an expected detector picture
+        detector_mask: torch.Tensor | None
+            A detector mask to generate target images (if tardet == 'detector')
         """
         self.init_ds = init_ds
         self.transformations = transformations
 
         self.sim_params = sim_params  # to check if all transforms results in right shape
         self.check_transformations()  # print warnings if necessary
+
+        self.target = target
+        self.detector_mask = detector_mask
 
     def check_transformations(self):
         """
@@ -173,7 +184,17 @@ class DatasetOfWavefronts(Dataset):
         # apply transformations
         wavefront_image = self.transformations(raw_image)
 
-        return wavefront_image, label
+        if self.target == 'label':
+            return wavefront_image, label
+
+        if self.target == 'detector':
+            if self.detector_mask is None:  # no detector mask provided
+                warnings.warn(
+                    message='No Detector mask provided to generate targets!'
+                )
+            else:
+                detector_image = torch.where(label == self.detector_mask, 1.0, 0.0)
+                return wavefront_image, detector_image
 
 
 # ------------------------------------------------ NOT REVISED! NOT USED NOW!
