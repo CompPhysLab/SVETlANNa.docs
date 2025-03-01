@@ -16,6 +16,13 @@ jupyter = "^1.1.1"
 tqdm = "^4.66.5"
 scipy = "^1.14.1"
 tensorboard = "^2.18.0"
+# for the Mackey-Glass time-series generation
+reservoirpy = "^0.3.12"
+# for Weizmann dataset downloading and processing
+requests = "^2.32.3"
+av = "^14.1.0"
+scikit-image = "^0.25.1"
+anywidget = "^0.9.14"
 
 
 [build-system]

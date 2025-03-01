@@ -1,0 +1,7 @@
+Training results (15 epochs):
+	Train: 80.84%
+	Test: 65.54%
+
+Perfomance:
+	Files prediction accuracy: 86.67%
+	True label in top-3 predictions for 26 out of 30 test files!
