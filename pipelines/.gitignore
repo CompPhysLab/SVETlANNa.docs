@@ -1,0 +1,5 @@
+# Ignore datasets
+data/
+
+# ignore tensorboard folder
+runs/
