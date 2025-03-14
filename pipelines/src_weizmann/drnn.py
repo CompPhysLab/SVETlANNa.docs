@@ -9,7 +9,7 @@ from .get_elements import *
 
 class DiffractiveRNN(nn.Module):
     """
-    A recurrent diffractive netvork proposed in [1].
+    A recurrent diffractive network proposed in [1].
     """
 
     def __init__(
@@ -60,7 +60,7 @@ class DiffractiveRNN(nn.Module):
         # ---------------------------------------------- READ-OUT LAYER
         self.read_out_layer = get_readout_layer(
             self.sim_params, self.fs_method,
-        ).to(self.__device).to(self.__device)
+        ).to(self.__device)
         # -------------------------------------------------------------
         # -------------------------------------------- DETECTOR (LAYER)
         self.detector = get_detector_layer(self.sim_params).to(self.__device)
