@@ -6,21 +6,16 @@ package-mode = false
 python = "^3.11,<3.12"
 numpy = "<2.0"
 matplotlib = "<3.9.2"
-torchvision = "^0.21.0"
-# our package
-svetlanna = { git = "https://github.com/CompPhysLab/SVETlANNa.git", branch = "dev" }
-
-pytest = "^8.3.2"
 jupyter = "^1.1.1"
 tqdm = "^4.66.5"
 scipy = "^1.14.1"
+# our package
+svetlanna = { git = "https://github.com/CompPhysLab/SVETlANNa.git", branch = "dev" }
 
 [[tool.poetry.source]]
 name = "pytorch-cuda"
 url = "https://download.pytorch.org/whl/cu126"
 priority = "explicit"
-
-
 
 [tool.poetry.group.dev.dependencies]
 py-cpuinfo = "^9.0.0"
