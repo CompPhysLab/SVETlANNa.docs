@@ -1,5 +1,8 @@
 # Ignore datasets
 data/
 
+# ignore some Weizmann experiments results folder
+models/reproduced_results/weizmann_exp*/
+
 # ignore tensorboard folder
 runs/
