@@ -10,7 +10,7 @@ jupyter = "^1.1.1"
 tqdm = "^4.66.5"
 scipy = "^1.14.1"
 # our package
-svetlanna = { git = "https://github.com/CompPhysLab/SVETlANNa.git", branch = "dev" }
+svetlanna = { git = "https://github.com/CompPhysLab/SVETlANNa.git", branch = "clerk" }
 
 [[tool.poetry.source]]
 name = "pytorch-cuda"
