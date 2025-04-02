@@ -252,7 +252,7 @@ class WeizmannDsWfSeqs(Dataset):
         ind_filepath, frames_ids = self.ds_constructor[ind_this]
         
         filepath = self.ds_filepathes[ind_filepath]
-        action_name = filepath.split('/')[2].split('_')[0]  # depends on a data directory!
+        action_name = filepath.split('/')[-2].split('_')[0]  # depends on a data directory!
         label = ACTION_TO_ID[action_name]  # label for the sequence
 
         if (not self.augmentation_horizontally_flip) or (self.augmentation_horizontally_flip and ind_this % 2 == 0):
