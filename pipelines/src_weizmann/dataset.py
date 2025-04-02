@@ -84,7 +84,7 @@ class WeizmannDsWfSeqs(Dataset):
         seqs_counter = {}
         
         for ind_file, filepath in enumerate(self.ds_filepathes):
-            action_name = filepath.split('/')[2].split('_')[0]  # depends on a data directory!
+            action_name = filepath.split('/')[-2].split('_')[0]  # depends on a data directory!
             if action_name not in seqs_counter.keys():
                 seqs_counter[action_name] = 0
             
