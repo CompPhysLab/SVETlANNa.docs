@@ -30,6 +30,13 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 plt.style.use('dark_background')
 
+import gc
+import pickle
+
+# Ensure memory_snapshots directory exists
+MEMORY_SNAPSHOTS_FOLDER = 'memory_snapshots'
+if not os.path.exists(MEMORY_SNAPSHOTS_FOLDER):
+    os.makedirs(MEMORY_SNAPSHOTS_FOLDER)
 
 working_frequency = 0.4 * 1e12  # [Hz]
 c_const = 299_792_458  # [m / s]
@@ -38,7 +45,7 @@ working_wavelength = c_const / working_frequency  # [m]
 # neuron size (square)
 neuron_size = 0.53 * working_wavelength  # [m]
 
-DETECTOR_SIZE = (1024, 1024)
+DETECTOR_SIZE = (64, 64)
 # an actual zone where weights will be updated during a training process
 
 # number of neurons in simulation
@@ -78,7 +85,8 @@ mnist_test_ds = torchvision.datasets.MNIST(
 
 number_of_classes = 10
 
-detector_segment_size = 22 * working_wavelength
+# для сетки 1024x1024 было 22
+detector_segment_size = 6 * working_wavelength
 
 # size of each segment in neurons
 x_segment_nodes = int(detector_segment_size / neuron_size)
@@ -198,7 +206,8 @@ def set_setup(
 
     elements_list.append(free_space)
 
-    for _ in range(2):
+    # TODO: add 2 layers
+    for _ in range(1):
         elements_list.append(trainable_diffractive_layer)
         elements_list.append(free_space)
 
@@ -213,7 +222,8 @@ def set_setup(
         elements_list.append(untrained_diffractive_layer)
         elements_list.append(free_space)
 
-    for _ in range(2):
+    # TODO: add 2 layers
+    for _ in range(1):
         elements_list.append(trainable_diffractive_layer)
         elements_list.append(free_space)
 
@@ -228,8 +238,10 @@ def set_setup(
     return LinearOpticalSetup(elements=elements_list)
 
 
-NUM_OF_DIFF_LAYERS_NO_TRAIN = 507
-NUM_OF_DIFF_LAYERS_BEGINNING = 253
+# TODO: add 507 layers
+NUM_OF_DIFF_LAYERS_NO_TRAIN = 2
+# TODO: add 253 layers
+NUM_OF_DIFF_LAYERS_BEGINNING = 1
 
 optical_setup = set_setup(
     total_number_of_layers=NUM_OF_DIFF_LAYERS_NO_TRAIN,
@@ -248,7 +260,8 @@ if CALCULATE_ACCURACIES:
 else:
     detector_processor = None
 
-train_bs = 32  # a batch size for training set
+# TODO: add 32
+train_bs = 256  # a batch size for training set
 val_bs = 16  # a batch size for validation set
 
 LR = 1e-3  # learning rate
@@ -295,7 +308,7 @@ test_wf_loader = torch.utils.data.DataLoader(
     drop_last=False,
 )  # data loader for a test MNIST data
 
-
+import pickle
 def onn_train_mse(
     optical_net, wavefronts_dataloader,
     detector_processor_clf,  # DETECTOR PROCESSOR needed for accuracies only!
@@ -353,12 +366,33 @@ def onn_train_mse(
         batch_targets = batch_targets.to(device)
 
         optimizer.zero_grad()
-
+        # torch.cuda.memory._record_memory_history(device=device)
         # forward of an optical network
         detector_output = optical_net(batch_wavefronts)
 
+        memory_snapshot = torch.cuda.memory_snapshot()
+
+        with open("memory_snapshot.pickle", "wb") as f:
+            pickle.dump(memory_snapshot, f)
+
+
+        # torch.cuda.memory._snapshot()
+        # torch.cuda.memory._dump_snapshot()
+
+        # torch.cuda.memory._record_memory_history(enabled=None)
+
+        # if torch.cuda.is_available():
+        #     memory_snapshot = torch.cuda.memory._snapshot()
+        #     with open(f"{MEMORY_SNAPSHOTS_FOLDER}/memory_snapshot_forward_pass.pickle", "wb") as f:
+        #         pickle.dump(memory_snapshot, f)
+
         # calculate loss for a batch
         loss = loss_func(detector_output, batch_targets)
+
+        # if torch.cuda.is_available():
+        #     memory_snapshot = torch.cuda.memory._snapshot()
+        #     with open(f"{MEMORY_SNAPSHOTS_FOLDER}/memory_snapshot_loss_calc.pickle", "wb") as f:
+        #         pickle.dump(memory_snapshot, f)
 
         loss.backward()
         optimizer.step()
@@ -484,7 +518,7 @@ optical_setup.net = optical_setup.net.to(DEVICE)
 SIM_PARAMS = SIM_PARAMS.to(DEVICE)
 detector_processor = detector_processor.to(DEVICE)
 
-n_epochs = 12
+n_epochs = 1
 print_each = 2  # print each n'th epoch info
 
 scheduler = None  # sheduler for a lr tuning during training
@@ -508,7 +542,7 @@ train_epochs_acc = []
 val_epochs_acc = []  # to store accuracies
 
 torch.manual_seed(98)  # for reproducability?
-
+print(DEVICE)
 with clerk.begin(
     autosave_checkpoint=True
 ):
@@ -572,10 +606,17 @@ with clerk.begin(
         # save losses
         train_epochs_losses.append(mean_train_loss)
         val_epochs_losses.append(mean_val_loss)
-        # seve accuracies
+        # save accuracies
         train_epochs_acc.append(train_accuracy)
         val_epochs_acc.append(val_accuracy)
 
+# Загрузка снимка памяти
+with open("memory_snapshot.pickle", "rb") as f:
+    loaded_snapshot = pickle.load(f)
+
+# Пример анализа
+print(f"Количество записей в снимке: {len(loaded_snapshot)}")
+print("Пример записи:", loaded_snapshot[0])
 # learning curve
 fig, axs = plt.subplots(1, 2, figsize=(10, 3))
 
@@ -616,45 +657,45 @@ target_indices = {1, 3, 511, 1021, 1023}
 n_cols = len(target_indices)  # Количество колонок равно числу целевых индексов
 n_rows = 1
 
-# Создаем фигуру для визуализации
-fig, axs = plt.subplots(n_rows, n_cols, figsize=(n_cols * 5.2, n_rows * 4.6))
+# # Создаем фигуру для визуализации
+# fig, axs = plt.subplots(n_rows, n_cols, figsize=(n_cols * 5.2, n_rows * 4.6))
 
-cmap = 'rainbow'  # Цветовая карта для визуализации
-count = 1
-# Перебираем слои в optical_setup
-for ind_layer, layer in enumerate(optical_setup.net.to(torch.device("cpu"))):
-    if ind_layer in target_indices and isinstance(layer, elements.DiffractiveLayer):    # noqa: E501
+# cmap = 'rainbow'  # Цветовая карта для визуализации
+# count = 1
+# # Перебираем слои в optical_setup
+# for ind_layer, layer in enumerate(optical_setup.net.to(torch.device("cpu"))):
+#     if ind_layer in target_indices and isinstance(layer, elements.DiffractiveLayer):    # noqa: E501
 
-        # Определяем текущий subplot
-        ax_this = axs[list(target_indices).index(ind_layer)]
+#         # Определяем текущий subplot
+#         ax_this = axs[list(target_indices).index(ind_layer)]
 
-        # Добавляем заголовок с индексом слоя
-        ax_this.set_title(f'DiffractiveLayer {count}')
-        count += 1
+#         # Добавляем заголовок с индексом слоя
+#         ax_this.set_title(f'DiffractiveLayer {count}')
+#         count += 1
 
-        # Получаем mask для визуализации
-        mask_to_visualize = layer.mask.detach()
+#         # Получаем mask для визуализации
+#         mask_to_visualize = layer.mask.detach()
 
-        # Визуализируем mask
-        im = ax_this.imshow(
-            mask_to_visualize, cmap=cmap,
-            vmin=0, vmax=MAX_PHASE
-        )
-        x_frame = (x_layer_nodes - DETECTOR_SIZE[1]) / 2
-        y_frame = (y_layer_nodes - DETECTOR_SIZE[0]) / 2
-        ax_this.set_xlim([x_frame, x_layer_nodes - x_frame])
-        ax_this.set_ylim([y_frame, y_layer_nodes - y_frame])
+#         # Визуализируем mask
+#         im = ax_this.imshow(
+#             mask_to_visualize, cmap=cmap,
+#             vmin=0, vmax=MAX_PHASE
+#         )
+#         x_frame = (x_layer_nodes - DETECTOR_SIZE[1]) / 2
+#         y_frame = (y_layer_nodes - DETECTOR_SIZE[0]) / 2
+#         ax_this.set_xlim([x_frame, x_layer_nodes - x_frame])
+#         ax_this.set_ylim([y_frame, y_layer_nodes - y_frame])
 
-        cbar = fig.colorbar(
-            im,
-            ax=ax_this,
-            orientation='vertical',
-            fraction=0.046,
-            pad=0.04
-        )
-        cbar.set_label('Mask Value')
-fig.savefig(f'images/GPU_512_DL_mnist_mse_{DETECTOR_SIZE[0]}x{DETECTOR_SIZE[1]}_masks.png', dpi=500)  # Сохраняем с высоким разрешением
-plt.close(fig)
+#         cbar = fig.colorbar(
+#             im,
+#             ax=ax_this,
+#             orientation='vertical',
+#             fraction=0.046,
+#             pad=0.04
+#         )
+#         cbar.set_label('Mask Value')
+# fig.savefig(f'images/GPU_512_DL_mnist_mse_{DETECTOR_SIZE[0]}x{DETECTOR_SIZE[1]}_masks.png', dpi=500)  # Сохраняем с высоким разрешением
+# plt.close(fig)
 RESULTS_FOLDER = f'models/reproduced_results/MNIST_MSE_Ozcan_2018-2020_GPU_{512}_DL_{DETECTOR_SIZE[0]}x{DETECTOR_SIZE[1]}_grid'
 
 if not os.path.exists(RESULTS_FOLDER):

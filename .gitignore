@@ -165,3 +165,12 @@ cython_debug/
 /GPU/files
 /GPU/images
 /GPU/models
+
+/data
+/GPU_512_mnist_mse_fix_experiment
+/images
+/memory_snapshots
+/models
+
+*.pickle
+/memory_profile.py
