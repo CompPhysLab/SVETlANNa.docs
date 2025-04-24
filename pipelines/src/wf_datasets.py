@@ -248,7 +248,7 @@ class WavefrontsDatasetSimple(Dataset):
         transformed_image_size = transformed_image.size()[-2:]  # [H, W]
 
         # we need to resize an image to match simulation parameters (layers dimensions)
-        y_nodes, x_nodes = self.sim_params.y_nodes, self.sim_params.x_nodes
+        y_nodes, x_nodes = self.sim_params.axes_size(axs=('H', 'W'))
         # check (last two dimensions) if transformations result in a proper size
         if not transformed_image_size == torch.Size([y_nodes, x_nodes]):
             # add padding if transformed_image is not match with sim_params!
@@ -342,7 +342,7 @@ class WavefrontsDatasetWithSLM(Dataset):
         transformed_image_size = transformed_image.size()[-2:]  # [H, W]
 
         # we need to resize an image to match simulation parameters (layers dimensions)
-        y_nodes, x_nodes = self.sim_params.y_nodes, self.sim_params.x_nodes
+        y_nodes, x_nodes = self.sim_params.axes_size(axs=('H', 'W'))
         if not transformed_image_size == torch.Size([y_nodes, x_nodes]):
             # check (last two dimensions) if we already resized an image by applying self.image_transforms_comp
             resize = transforms.Resize(
@@ -354,15 +354,14 @@ class WavefrontsDatasetWithSLM(Dataset):
         # secondly, we must somehow transform an image to a wavefront
         output_field = self.beam_field
         for element in self.system_before_slm:
-            output_field = element.forward(input_field=output_field)
+            output_field = element.forward(output_field)
 
         # use an image as a mask for SLM
         # TODO: make it possible to use a mask of any values (add normalization by levels within an SLM)
-        mask = (transformed_image * (self.slm_levels - 1)).to(torch.int32)
-        image_based_slm = elements.SpatialLightModulator(
+        mask = (transformed_image[0] * (self.slm_levels - 1)).to(torch.int32)
+        image_based_slm = elements.DiffractiveLayer(
             simulation_parameters=self.sim_params,
             mask=mask,
-            number_of_levels=self.slm_levels
         )
 
         wavefront_image = image_based_slm.forward(output_field)
