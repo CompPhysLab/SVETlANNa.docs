@@ -1,6 +1,9 @@
 # Ignore datasets
 data/
 
+# ignore some auto encoder results
+models/autoencoder/ae_with_phases
+
 # ignore some Weizmann experiments results folder
 models/reproduced_results/weizmann_exp*/
 
