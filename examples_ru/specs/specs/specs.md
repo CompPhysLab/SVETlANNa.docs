@@ -1,0 +1,53 @@
+# (0) ThinLens
+**focal_length**
+```
+0.01
+```
+
+**radius**
+```
+0.02
+```
+
+# (1) FreeSpace
+**distance**
+```
+Parameter of size (1x1)
+```
+
+# (2) ThinLens
+**focal_length**
+```
+ConstrainedParameter
+  ┏ min value 0.0005000000237487257
+  ┗ max value 0.10000000149011612
+0.009999999776482582
+```
+
+**radius**
+```
+0.02
+```
+
+# (3) DiffractiveLayer
+**mask**
+```
+ConstrainedParameter of size (100x100)
+```
+
+The image is saved to `3_DiffractiveLayer\mask_0.png`
+
+![mask](3_DiffractiveLayer\mask_0.png)
+
+
+**mask_norm**
+```
+6.283185307179586
+```
+
+
+# Tree:
+* `(0) ThinLens`
+* `(1) FreeSpace`
+* `(2) ThinLens`
+* `(3) DiffractiveLayer`
