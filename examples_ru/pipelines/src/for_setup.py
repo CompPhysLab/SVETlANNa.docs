@@ -1,6 +1,6 @@
 import torch
 from svetlanna import SimulationParameters
-from svetlanna.parameters import ConstrainedParameter
+from svetlanna.parameters import BoundedParameter
 from svetlanna import Wavefront
 from svetlanna import elements
 from svetlanna.setup import LinearOpticalSetup
@@ -41,7 +41,7 @@ def get_random_diffractive_layer(
     
     return elements.DiffractiveLayer(
         simulation_parameters=difflayer_sim_params,
-        mask=ConstrainedParameter(
+        mask=BoundedParameter(
             random_mask,
             min_value=0,
             max_value=max_phase
