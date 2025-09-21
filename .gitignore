@@ -1,5 +1,7 @@
 # MacOS system
 .DS_Store
+# test venv (den4s)
+new-venv/
 
 # PyCharm
 .idea/

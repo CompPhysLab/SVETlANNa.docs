@@ -1,5 +1,5 @@
 # Ignore datasets
-data/
+data/*/
 
 # ignore some auto encoder results
 models/autoencoder/ae_with_phases
