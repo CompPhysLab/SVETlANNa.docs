@@ -7,6 +7,13 @@
 
 Русифицированные примеры разположены в папке [examples_ru](https://github.com/CompPhysLab/SVETlANNa.docs/tree/main/examples_ru).
 
+**ВНИМАНИЕ!** Примеры из папки `pipelines` содержат обучение моделей, которое занимает продолжительное время.
+Для удобства к некоторым примерам идут примеры, которые не содержат процесс обучения, а загружают веса уже обученных моделей, поэтому
+* вместо `pipelines/03_mnist_experiments.ipynb` можно сразу запустить `pipelines/03_load_experiments.ipynb`
+* вместо `pipelines/07_weizmann_drnn.ipynb` можно сразу запустить `pipelines/07_load_weizmann_drnn.ipynb`
+* вместо `pipelines/08_autoencoder.ipynb` можно сразу запустить `pipelines/08_load_autoencoder.ipynb`
+
+---
 Большинство примеров можно запускать в облаке без предварительной установки, используя бесплатные серверы Google Colab.
 Для этого достаточно открыть ссылку из списка ниже и последовательно выполнить ячейки.
 
