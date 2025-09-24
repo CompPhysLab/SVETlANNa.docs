@@ -12,6 +12,10 @@
 * вместо `pipelines/03_mnist_experiments.ipynb` можно сразу запустить `pipelines/03_load_experiments.ipynb`
 * вместо `pipelines/07_weizmann_drnn.ipynb` можно сразу запустить `pipelines/07_load_weizmann_drnn.ipynb`
 * вместо `pipelines/08_autoencoder.ipynb` можно сразу запустить `pipelines/08_load_autoencoder.ipynb`
+* в примерах `pipelines/02_mnist_by_ozcan.ipynb` и `pipelines/02_mnist_mse.ipynb` можно пропустить запуск ячеек из разделов `4.2.2` и `4.2.3`, переходя сразу к разделу `5`, чтобы пропустить длительный процесс обучения.
+
+**ВНИМАНИЕ!** Запуск примера `GPU/GPU_512_mnist_mse.ipynb` требует около двух дней расчетов на видеокарте RTX 4090.
+Для проверки работы GPU лучше использовать вычислительно более простой пример, например `GPU/gpu_usage_example.ipynb`.
 
 ---
 Большинство примеров можно запускать в облаке без предварительной установки, используя бесплатные серверы Google Colab.
