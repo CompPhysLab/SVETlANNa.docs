@@ -61,7 +61,7 @@
 
 # Установки и требования
 
-См. файлы [README.ru.md](https://github.com/CompPhysLab/SVETlANNa/blob/main/README.md) основного репозитория.
+См. файлы [README.ru.md](https://github.com/CompPhysLab/SVETlANNa/blob/main/README.ru.md) основного репозитория.
 
 # Вклад в разработку
 
