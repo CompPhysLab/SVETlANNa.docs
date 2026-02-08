@@ -1,13 +1,17 @@
 [tool.poetry]
-package-mode = false
-
+name = "svetlanna-docs"
+version = "0.1.0"
+packages = [
+    { include = "scripts" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.11,<3.12"
 numpy = "<2.0"
 
 # our package
-svetlanna = { git = "https://github.com/CompPhysLab/SVETlANNa.git", branch = "dev" }
+svetlanna = { git = "https://github.com/CompPhysLab/SVETlANNa.git", branch = "v2.0" }
+# svetlanna = { path = "../SVETlANNa", develop = true }
 
 matplotlib = "<3.9.2"
 jupyter = "^1.1.1"
@@ -17,12 +21,24 @@ scipy = "^1.14.1"
 reservoirpy = "^0.3.12"
 # for Weizmann dataset downloading and processing
 requests = "^2.32.3"
-av = "^14.1.0"
 scikit-image = "^0.25.1"
+click = "^8.3.1"
 
 [tool.poetry.group.dev.dependencies]
 py-cpuinfo = "^9.0.0"
 gputil = "^1.4.0"
+
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = "^1.6.1"
+mkdocs-material = "^9.7.1"
+mkdocstrings = {extras = ["python"], version = "^1.0.2"}
+black = "^26.1.0"
+pygments = "^2.19.2"
+
+[tool.poetry.scripts]
+build_static = "scripts:build_static"
+dev = "scripts:dev"
 
 [build-system]
 requires = ["poetry-core"]
