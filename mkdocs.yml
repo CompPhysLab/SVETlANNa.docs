@@ -80,6 +80,8 @@ plugins:
             show_docstring_examples: true
             members_order: source
             unwrap_annotated: true
+            filters:
+              - "!^_"
 
 markdown_extensions:
   - def_list
