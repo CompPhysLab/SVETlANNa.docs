@@ -31,6 +31,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install poetry
           poetry install
+          poetry update svetlanna --no-cache
           poetry run pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
       
       - name: Build static
