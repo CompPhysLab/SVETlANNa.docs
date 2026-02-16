@@ -45,7 +45,7 @@ repo_url: https://github.com/CompPhysLab/SVETlANNa
 nav:
   - Home: index.md
   - API Reference:
-    - svetlanna: reference/svetlanna.md
+    - SimulationParameters: reference/simulation_parameters.md
     - elements:
       - Element: reference/elements/element.md
       - Apertures: reference/elements/apertures.md
@@ -53,6 +53,16 @@ nav:
       - Thin Lens: reference/elements/thin_lens.md
       - Nonlinear Element: reference/elements/nonlinear_elements.md
       - Spatial Light Modulator: reference/elements/slm.md
+    - Parameter and ConstrainedParameter: reference/parameters.md
+    - PartialWithParameters: reference/partial_with_parameters.md
+    - LinearOpticalSetup: reference/linear_optical_setup.md
+    - Wavefront: reference/wavefront.md
+    - Utilities:
+      - Units: reference/units.md
+      - Logging: reference/logging.md
+    - Visualization: reference/visualization.md
+    - Specs: reference/specs.md
+      
 
 plugins:
   - search
@@ -71,6 +81,7 @@ plugins:
             line_length: 60
             show_signature_annotations: true
             show_signature_type_parameters: true
+            show_docstring_type_aliases: true
             show_symbol_type_heading: true
             show_symbol_type_toc: true
             signature_crossrefs: true

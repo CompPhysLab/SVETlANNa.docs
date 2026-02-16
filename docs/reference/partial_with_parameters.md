@@ -1,0 +1,5 @@
+---
+title: PartialWithParameters
+---
+
+::: svetlanna.PartialWithParameters

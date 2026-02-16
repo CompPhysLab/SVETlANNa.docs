@@ -1,5 +1,5 @@
 ---
-title: svetlanna
+title: SimulationParameters
 ---
 
 ::: svetlanna.SimulationParameters

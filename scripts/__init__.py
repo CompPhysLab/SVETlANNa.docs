@@ -10,6 +10,11 @@ def build_static():
         check=True,
         capture_output=True,
     )
+    subprocess.run(
+        ["python", "docs/reference/visualization/html_generator.py"],
+        check=True,
+        capture_output=True,
+    )
 
 
 @click.command()
