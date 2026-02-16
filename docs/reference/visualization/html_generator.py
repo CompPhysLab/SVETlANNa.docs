@@ -79,7 +79,7 @@ write_text(
         "show_specs.html.j2",
         {
             "css": specs_widget._css,
-            "esm_path": "show_specs_esm.js",
+            "esm_path": "./show_specs_esm.js",
             "elements_b64": specs_b64,
             "structure_html": specs_structure_html_open,
         },
@@ -114,7 +114,7 @@ write_text(
         "show_stepwise_forward.html.j2",
         {
             "css": show_stepwise_forward_widget._css,
-            "esm_path": "show_stepwise_forward_esm.js",
+            "esm_path": "./show_stepwise_forward_esm.js",
             "elements_b64": stepwise_b64,
             "structure_html": stepwise_structure_html_open,
         },
