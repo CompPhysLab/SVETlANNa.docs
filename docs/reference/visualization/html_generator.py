@@ -19,6 +19,7 @@ sim_params = sv.SimulationParameters(
     wavelength=0.1,
 )
 
+torch.manual_seed(42)
 setup = sv.LinearOpticalSetup(
     [
         sv.elements.RectangularAperture(sim_params, width=0.5, height=0.5),
