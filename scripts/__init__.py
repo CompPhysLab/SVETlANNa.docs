@@ -5,16 +5,24 @@ import click
 
 @click.command()
 def build_static():
-    subprocess.run(
-        ["python", "docs/reference/elements/slm/one_step_func_plots.py"],
-        check=True,
-        capture_output=True,
-    )
-    subprocess.run(
-        ["python", "docs/reference/visualization/html_generator.py"],
-        check=True,
-        capture_output=True,
-    )
+    try:
+        subprocess.run(
+            ["python", "docs/reference/elements/slm/one_step_func_plots.py"],
+            check=True,
+            capture_output=True,
+        )
+        subprocess.run(
+            ["python", "docs/reference/visualization/html_generator.py"],
+            check=True,
+            capture_output=True,
+        )
+        subprocess.run(
+            ["python", "docs/reference/networks/html_generator.py"],
+            check=True,
+            capture_output=True,
+        )
+    except subprocess.CalledProcessError as e:
+        print(f"Error occurred while building static files: {e.stderr.decode()}")
 
 
 @click.command()
