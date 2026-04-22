@@ -1,0 +1,30 @@
+<meta name="color-scheme" content="light dark">
+<style type="module">
+  :root {
+    color-scheme: light dark;
+  }
+  html, body {
+    margin: 0;
+    background: transparent;
+  }
+</style>
+<style>
+{{ css | safe }}
+</style>
+<script type="module">
+import widget from "{{ esm_path }}";
+
+function getter(key) {
+    switch (key) {
+        case "elements":
+            return JSON.parse(atob(`{{ elements_b64 }}`));
+        case "structure_html":
+            return `{{ structure_html | safe }}`;
+        default:
+            break;
+    }
+}
+window.onload = function() {
+    widget.render({model: {get: getter}, el: document.body});
+};
+</script>

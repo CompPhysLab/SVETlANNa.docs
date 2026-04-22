@@ -1,0 +1,4 @@
+.doc-signature code {
+  /* background: none; */
+  border-left: .2em solid var(--md-accent-fg-color);
+}
