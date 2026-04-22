@@ -10,10 +10,10 @@ python = "^3.11,<3.12"
 numpy = "<2.0"
 
 # our package
-svetlanna = { git = "https://github.com/CompPhysLab/SVETlANNa.git", branch = "v2.0" }
+svetlanna = { git = "https://github.com/CompPhysLab/SVETlANNa.git", branch = "main" }
 # svetlanna = { path = "../SVETlANNa", develop = true }
 
-matplotlib = "<3.9.2"
+matplotlib = ">=3.9.2"
 jupyter = "^1.1.1"
 tqdm = "^4.66.5"
 scipy = "^1.14.1"

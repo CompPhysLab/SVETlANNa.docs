@@ -49,6 +49,7 @@ nav:
     - Wavefront: reference/wavefront.md
     - elements:
       - Element: reference/elements/element.md
+      - Free Space: reference/elements/free_space.md
       - Apertures: reference/elements/apertures.md
       - Diffractive Layers: reference/elements/diffractive_layers.md
       - Thin Lens: reference/elements/thin_lens.md
